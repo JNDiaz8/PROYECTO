@@ -73,12 +73,14 @@ public class LibroDAOImp implements LibroDAO {
 			preparedStatement.setString(2, libro.getNombreAutor());
 			preparedStatement.setString(3, libro.getEditorial());
 			preparedStatement.setString(4, libro.getNombreCategoria());
+			return preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
-		return false;
+		
 	}
 
 	@Override
