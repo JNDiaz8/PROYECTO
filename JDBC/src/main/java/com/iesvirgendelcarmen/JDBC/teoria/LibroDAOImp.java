@@ -67,7 +67,17 @@ public class LibroDAOImp implements LibroDAO {
 
 	@Override
 	public boolean insertarLibro(LibroDTO libro) {
-		// TODO Auto-generated method stub
+		String sql = "INSERT into libro (nombre, autor, editorial, categoria) VALUES(?,?,?,?)";
+		try(PreparedStatement preparedStatement = conexion.prepareStatement(sql);){
+			preparedStatement.setString(1, libro.getNombreLibro());
+			preparedStatement.setString(2, libro.getNombreAutor());
+			preparedStatement.setString(3, libro.getEditorial());
+			preparedStatement.setString(4, libro.getNombreCategoria());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return false;
 	}
 
