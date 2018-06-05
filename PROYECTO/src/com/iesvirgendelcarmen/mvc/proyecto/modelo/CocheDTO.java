@@ -1,24 +1,24 @@
 package com.iesvirgendelcarmen.mvc.proyecto.modelo;
 
 public class CocheDTO {
-	private int añoCoche;
+	private int anioCoche;
 	private String modeloCoche;
 	private String marcaCoche;
-	private String VIMCoche;
+	private String vinCoche;
 	
-	public CocheDTO(int añoCoche, String modeloCoche, String marcaCoche, String vIMCoche) {
-		this.añoCoche = añoCoche;
+	public CocheDTO(int anioCoche, String modeloCoche, String marcaCoche, String vinCoche) {
+		this.anioCoche = anioCoche;
 		this.modeloCoche = modeloCoche;
 		this.marcaCoche = marcaCoche;
-		VIMCoche = vIMCoche;
+		this.vinCoche = vinCoche;
 	}
 
-	public int getAñoCoche() {
-		return añoCoche;
+	public int getAnioCoche() {
+		return anioCoche;
 	}
 
-	public void setAñoCoche(int añoCoche) {
-		this.añoCoche = añoCoche;
+	public void setAnioCoche(int anioCoche) {
+		this.anioCoche = anioCoche;
 	}
 
 	public String getModeloCoche() {
@@ -37,25 +37,22 @@ public class CocheDTO {
 		this.marcaCoche = marcaCoche;
 	}
 
-	public String getVIMCoche() {
-		return VIMCoche;
+	public String getVinCoche() {
+		return vinCoche;
 	}
 
-	public void setVIMCoche(String vIMCoche) {
-		VIMCoche = vIMCoche;
+	public void setVinCoche(String vinCoche) {
+		this.vinCoche = vinCoche;
 	}
 
 	@Override
 	public String toString() {
-		return "CocheDTO [añoCoche=" + añoCoche + ", modeloCoche=" + modeloCoche + ", marcaCoche=" + marcaCoche
-				+ ", VIMCoche=" + VIMCoche + "]";
+		return "CocheDTO [anioCoche=" + anioCoche + ", modeloCoche=" + modeloCoche + ", marcaCoche=" + marcaCoche
+				+ ", vinCoche=" + vinCoche + "]";
 	}
 	
 	
-	
-	
-	
-	
+
 	
 
 }

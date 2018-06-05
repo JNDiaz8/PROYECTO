@@ -5,8 +5,8 @@ import java.util.List;
 public interface CocheDAO {
 	
 	List<CocheDTO> listarTodosCoches();
-	boolean borrarCoches(String VIMCoche);
-	boolean actualizarCoches(CocheDTO coche, int añoCoche,String modeloCoche, String marcaCoche);
+	boolean borrarCoches(String vinCoche);
+	boolean actualizarCoches(CocheDTO coche, int anioCoche,String modeloCoche, String marcaCoche);
 	boolean insertarCoches(CocheDTO coche);
 	boolean insertarListaCoches(List<CocheDTO> listaCoches);
 	
