@@ -1,5 +1,7 @@
 package com.iesvirgendelcarmen.mvc.proyecto.modelo;
 
+import java.awt.event.MouseEvent;
+
 public class CocheDTO {
 	private int anioCoche;
 	private String modeloCoche;
