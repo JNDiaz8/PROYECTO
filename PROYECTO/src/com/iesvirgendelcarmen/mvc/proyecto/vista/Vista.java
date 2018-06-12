@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.text.TableView.TableRow;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -25,6 +29,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import java.awt.ScrollPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Vista {
 
@@ -61,11 +68,14 @@ public class Vista {
 	private JButton botonBuscar;
 	private JButton botonSalir;
 	private JButton botonReset;
-	private ButtonGroup bgGroup;
 	private JLabel lblAo;
 	private JComboBox comboBoxAnio;
 	private JScrollPane scrollPane;
 	private ScrollPane scrollPane_1;
+	private Component table;
+	private Object[][] data;
+	private JScrollPane scrollPane_2;
+	private JTable table_1;
 
 	//private JTable table;
 	
@@ -146,10 +156,6 @@ public class Vista {
 		return menuItemAcercaDe;
 	}
 
-	public ButtonGroup getBgGroup() {
-		return bgGroup;
-	}
-
 	public JScrollPane getScrollPane() {
 		return scrollPane;
 	}
@@ -167,7 +173,7 @@ public class Vista {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 400);
+		frame.setBounds(200, 200, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -191,7 +197,6 @@ public class Vista {
 		mnAcercaDe.add(menuItemAcercaDe);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		frame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
 		
 		splitPane_1 = new JSplitPane();
 		splitPane_1.setResizeWeight(0.25);
@@ -257,8 +262,6 @@ public class Vista {
 		comboBoxAnio = new JComboBox();
 		panel_3.add(comboBoxAnio);
 		
-		bgGroup = new ButtonGroup();
-		
 		panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		
@@ -278,7 +281,6 @@ public class Vista {
 		comboBoxModelo = new JComboBox();
 		panel_5.add(comboBoxModelo);
 
-		
 		panel_6 = new JPanel();
 		panel_2.add(panel_6);
 		
@@ -294,25 +296,54 @@ public class Vista {
 			}
 		});
 		panel_6.add(botonSalir);
-		
-		scrollPane_1 = new ScrollPane();
-		tabbedPane.addTab("Tabla", null, scrollPane_1, null);
 		splitPane_1.setRightComponent(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 494, GroupLayout.PREFERRED_SIZE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		);
 		
+		scrollPane_2 = new JScrollPane();
+		tabbedPane.addTab("Tabla", null, scrollPane_2, null);
 		
-		
+		table_1 = new JTable();
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				
+			},
+			new String[] {
+				"Marca", "Modelo", "Anio", "VIN"
+			}
+		));
+		scrollPane_2.setViewportView(table_1);
+		frame.getContentPane().setLayout(groupLayout);
 	
 		
 		
 	}
-
-	public Object getComboBoxMarca() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 
 }
 

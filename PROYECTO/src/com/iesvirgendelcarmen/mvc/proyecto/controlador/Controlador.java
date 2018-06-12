@@ -1,5 +1,6 @@
 package com.iesvirgendelcarmen.mvc.proyecto.controlador;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -90,7 +92,6 @@ public class Controlador implements ActionListener {
 				break;
 			case "Salir":
 				salirAplicacion();
-			case "Filtrar":
 				}
 			}
 
@@ -100,9 +101,11 @@ public class Controlador implements ActionListener {
 	
 
 	private void lanzarEleccionFichero() {
-		// TODO Auto-generated method stub
+			
+			
+			
 		
-	}
+		}
 
 
 	private void desplegarInformacion() {
