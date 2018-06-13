@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,31 +18,33 @@ import javax.swing.JOptionPane;
 
 import com.iesvirgendelcarmen.mvc.proyecto.modelo.CocheDAOImp;
 import com.iesvirgendelcarmen.mvc.proyecto.modelo.CocheDTO;
+import com.iesvirgendelcarmen.mvc.proyecto.modelo.LeerCSV;
 import com.iesvirgendelcarmen.mvc.proyecto.vista.Vista;
 
 
 
 public class Controlador implements ActionListener {
 	
+	String path=".";
+	
+	static List<CocheDTO> listaCochesEstatica;
+	
 	private Vista vista;
-
+	private List<CocheDTO> listaCoches;
+	
+	LeerCSV reader = new LeerCSV();
+	CocheDAOImp manipular = new CocheDAOImp();
+	
 	
 	public Controlador(Vista vista) {
 		this.vista = vista;
+		
 		
 		registrarComponentes();
 	}
 
 
-	private void colocarFormularioCoche(int i, List<CocheDTO> lista) {
-		vista.getTextFieldMarca().setText(
-				lista.get(i).getMarcaCoche());
-		vista.getTextFieldModelo().setText(
-				lista.get(i).getModeloCoche());
-		vista.getTextFieldvin().setText(
-				lista.get(i).getVinCoche());
-	
-	}
+
 
 
 	private void registrarComponentes() {
@@ -50,12 +53,12 @@ public class Controlador implements ActionListener {
 		vista.getMenuItemCargar().addActionListener(this);
 		vista.getMenuItemSalir().addActionListener(this);
 		//registramos botones
-		vista.getBotonMas().addActionListener(this);
-		vista.getBotonMenos().addActionListener(this);
-		vista.getBotonSalir().addActionListener(this);
-		vista.getBotonBuscar().addActionListener(this);
+		vista.getBtnMas().addActionListener(this);
+		vista.getBtnMenos().addActionListener(this);
+		vista.getBtnBorrar().addActionListener(this);
+		vista.getBtnLeer().addActionListener(this);
+		vista.getBtnActualizar().addActionListener(this);
 
-		
 	}
 
 
@@ -81,17 +84,17 @@ public class Controlador implements ActionListener {
 			int contador = 0;
 			switch (textoBoton) {
 			case ">":
-				System.out.println("pulsado " + textoBoton);
 				contador += 10;
-			//	colocarFormularioCoche(contador);
 				break;
 			case "<":
-				System.out.println("pulsado " + textoBoton);
 				contador -= 10;
-			//	colocarFormularioCoche(contador);
 				break;
-			case "Salir":
-				salirAplicacion();
+			case "Añadir":
+				break;
+			case "Actualizar":
+				break;
+			case "Borrar":
+				break;
 				}
 			}
 
@@ -101,10 +104,21 @@ public class Controlador implements ActionListener {
 	
 
 	private void lanzarEleccionFichero() {
-			
-			
-			
-		
+		JFileChooser fileChooser = new JFileChooser("./ficherosCSV");
+		int resultado = fileChooser.showOpenDialog(vista.getFrame());
+		if(resultado==JFileChooser.APPROVE_OPTION) {
+			path = fileChooser.getSelectedFile().getPath();
+			if(listaCoches==null) {
+				listaCochesEstatica = reader.getCarListFromCSV(path);
+				listaCoches = listaCochesEstatica;
+				
+				if(manipular.listarTodosCoches().size()<=0 ) {
+					manipular.crearBaseDatos();
+					manipular.insertarListaCoches(listaCochesEstatica);
+					manipular.completarArrays(listaCochesEstatica);
+					}
+				}
+			}
 		}
 
 

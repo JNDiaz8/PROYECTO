@@ -9,11 +9,11 @@ public class TestMain {
 		CocheDAO manipulacionCoches = new CocheDAOImp();
 		List listaCoches = (List) manipulacionCoches.listarTodosCoches();
 		System.out.println("Nº de coches: " + listaCoches.size());
-		CocheDTO coche = new CocheDTO(2009, "modeloCoche", "marcaCoche", "vinCoche");
+		CocheDTO coche = new CocheDTO(2008, "modeloCoche", "marcaCoche", "4vinCoche666");
 		listaCoches.add(coche);
-		listaCoches.add(coche);
-		listaCoches.add(coche);
-		manipulacionCoches.insertarListaCoches(listaCoches);
+
+		manipulacionCoches.insertarCoches(coche);
+		manipulacionCoches.borrarCoches("4vinCoche666");
 	}
 
 }

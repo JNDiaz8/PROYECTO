@@ -17,10 +17,10 @@ public class CocheDAOImp implements CocheDAO {
 		try (Statement statement = conexion.createStatement();){
 			ResultSet resultSet = statement.executeQuery(sql);
 			while(resultSet.next()) {
-				CocheDTO coche = new CocheDTO(resultSet.getInt(2),
+				CocheDTO coche = new CocheDTO(resultSet.getInt(1),
+						resultSet.getString(2),
 						resultSet.getString(3),
-						resultSet.getString(4),
-						resultSet.getString(5));
+						resultSet.getString(4));
 				listaCoches.add(coche);
 			}
 		} catch (SQLException e) {
@@ -107,6 +107,31 @@ public class CocheDAOImp implements CocheDAO {
 				}
 			}
 		}
+
+	public boolean crearBaseDatos() {
+		String sql = "DROP TABLE IF EXISTS coches;"
+				+ "CREATE TABLE coches ("
+				+ "vinCoche TEXT PRIMARY KEY,"
+		        + "Marca TEXT,"
+		        + "Modelo TEXT,"
+		        + "Anio INTEGER,"
+		        + ");";
+		
+		try {
+			Statement st = conexion.createStatement();
+			st.executeUpdate(sql);
+			return true;
+		} catch (SQLException e1) {
+			return false;
+		}
+}
+		
+
+
+	public void completarArrays(List<CocheDTO> listaCochesEstatica) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 

@@ -29,4 +29,9 @@ public class LeerCSV {
 		}
 		return listaCoches;
 }
+
+	public List<CocheDTO> getCarListFromCSV(String path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
