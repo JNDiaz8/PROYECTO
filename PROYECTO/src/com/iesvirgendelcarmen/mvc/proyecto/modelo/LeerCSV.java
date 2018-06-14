@@ -1,37 +1,44 @@
 package com.iesvirgendelcarmen.mvc.proyecto.modelo;
 
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class LeerCSV {
 
-	public static List<CocheDTO> insertarCoche() {
-		List<CocheDTO> listaCoches = new ArrayList<>();
-		try {
-			Scanner in = new Scanner(new File("BD/Datos/Coches.csv"));
-			String cabecera = in.nextLine();
-			while (in.hasNextLine()){
-				String[] datos = in.nextLine().split(",");
-				CocheDTO coche = new CocheDTO(Integer.parseInt(datos[0].trim()), datos[1].trim(), datos[2].trim(), datos[3].trim());
-				listaCoches.add(coche);
-			}
-			in.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Fichero no encontrado");
-		}
-		return listaCoches;
-}
-
-	public List<CocheDTO> getCarListFromCSV(String path) {
-		// TODO Auto-generated method stub
-		return null;
+private static List<CocheDTO> ListaCoches = new ArrayList<>();
+	
+	public List<CocheDTO> getListaCochesFromCSV(String csvFilePath) {
+		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+				
+				CSVParser parser = new CSVParserBuilder().withSeparator(',').withIgnoreQuotations(true).build();
+				
+				CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).withCSVParser(parser).build();
+				String datosS[];
+		
+				while((datosS=csvReader.readNext())!=null) {
+					System.out.println(datosS[0] + datosS[1] +datosS[2]+ datosS[3]);
+					ListaCoches.add(new CocheDTO(datosS[0], datosS[1] , Integer.parseInt(datosS[2]), datosS[3]));
+					
+				}
+			} catch (IOException e) {
+				System.out.println("IO Exception");		
+				e.printStackTrace();
+				} 
+				
+			return ListaCoches;
 	}
 }

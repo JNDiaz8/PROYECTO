@@ -1,27 +1,25 @@
 package com.iesvirgendelcarmen.mvc.proyecto.vista;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
 
-import javax.swing.AbstractButton;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.LineBorder;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JToolBar;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.SystemColor;
-import java.awt.Color;
-import java.awt.Component;
+import javax.swing.JPanel;
+
 
 public class Vista {
 
@@ -35,6 +33,9 @@ public class Vista {
 	private JButton btnAñadir;
 	private JButton btnActualizar;
 	private JButton btnBorrar;
+	private Object tabbedPane;
+	private JScrollPane scrollPaneTablas;
+	private JMenuItem menuItemGuardar;
 
 	public JButton getBtnMenos() {
 		return btnMenos;
@@ -129,6 +130,9 @@ public class Vista {
 		menuItemCargar = new JMenuItem("Cargar datos");
 		mnDatos.add(menuItemCargar);
 		
+		menuItemGuardar = new JMenuItem("Guardar");
+		mnDatos.add(menuItemGuardar);
+		
 		menuItemSalir = new JMenuItem("Salir");
 		mnDatos.add(menuItemSalir);
 		
@@ -152,6 +156,13 @@ public class Vista {
 
 		
 		btnMas = new JButton(">");
+		
+		JPanel panelTablas = new JPanel();
+		panelTablas.setBorder(new LineBorder(Color.GRAY, 3));
+		panelTablas.setLayout(new BorderLayout(0, 0));
+		
+		scrollPaneTablas = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneTablas.setEnabled(false);
 		
 		
 
@@ -191,54 +202,74 @@ public class Vista {
 		);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"Marca", "Modelo", "Anio", "VIN"
-			}
-		));
+		
+			
+
 		scrollPane.setViewportView(table);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 
-	public AbstractButton getBotonMas() {
-		// TODO Auto-generated method stub
-		return null;
+	public JTable getTable() {
+		return table;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public Object getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public void setTabbedPane(Object tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+
+	public JScrollPane getScrollPaneTablas() {
+		return scrollPaneTablas;
+	}
+
+	public void setScrollPaneTablas(JScrollPane scrollPaneTablas) {
+		this.scrollPaneTablas = scrollPaneTablas;
+	}
+
+	public JMenuItem getMenuItemGuardar() {
+		return menuItemGuardar;
+	}
+
+	public void setMenuItemGuardar(JMenuItem menuItemGuardar) {
+		this.menuItemGuardar = menuItemGuardar;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public void setMenuItemCargar(JMenuItem menuItemCargar) {
+		this.menuItemCargar = menuItemCargar;
+	}
+
+	public void setMenuItemSalir(JMenuItem menuItemSalir) {
+		this.menuItemSalir = menuItemSalir;
+	}
+
+	public void setMenuItemAcercaDe(JMenuItem menuItemAcercaDe) {
+		this.menuItemAcercaDe = menuItemAcercaDe;
+	}
+
+	public void setBtnAñadir(JButton btnAñadir) {
+		this.btnAñadir = btnAñadir;
+	}
+
+	public JButton getBtnAñadir() {
+		return btnAñadir;
 	}
 
 	
-	public AbstractButton getBotonMenos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public AbstractButton getBotonSalir() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Component getFrame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object getTable() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 }

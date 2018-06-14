@@ -1,26 +1,18 @@
 package com.iesvirgendelcarmen.mvc.proyecto.modelo;
 
-import java.awt.event.MouseEvent;
+
 
 public class CocheDTO {
-	private int anioCoche;
 	private String modeloCoche;
 	private String marcaCoche;
+	private int anioCoche;
 	private String vinCoche;
 	
-	public CocheDTO(int anioCoche, String modeloCoche, String marcaCoche, String vinCoche) {
-		this.anioCoche = anioCoche;
+	public CocheDTO(String modeloCoche, String marcaCoche, int anioCoche, String vinCoche) {
 		this.modeloCoche = modeloCoche;
 		this.marcaCoche = marcaCoche;
-		this.vinCoche = vinCoche;
-	}
-
-	public int getAnioCoche() {
-		return anioCoche;
-	}
-
-	public void setAnioCoche(int anioCoche) {
 		this.anioCoche = anioCoche;
+		this.vinCoche = vinCoche;
 	}
 
 	public String getModeloCoche() {
@@ -39,6 +31,14 @@ public class CocheDTO {
 		this.marcaCoche = marcaCoche;
 	}
 
+	public int getAnioCoche() {
+		return anioCoche;
+	}
+
+	public void setAnioCoche(int anioCoche) {
+		this.anioCoche = anioCoche;
+	}
+
 	public String getVinCoche() {
 		return vinCoche;
 	}
@@ -49,9 +49,12 @@ public class CocheDTO {
 
 	@Override
 	public String toString() {
-		return "CocheDTO [anioCoche=" + anioCoche + ", modeloCoche=" + modeloCoche + ", marcaCoche=" + marcaCoche
+		return "CocheDTO [modeloCoche=" + modeloCoche + ", marcaCoche=" + marcaCoche + ", anioCoche=" + anioCoche
 				+ ", vinCoche=" + vinCoche + "]";
 	}
+	
+	
+	
 	
 	
 
