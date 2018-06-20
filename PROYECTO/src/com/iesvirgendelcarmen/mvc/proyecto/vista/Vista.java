@@ -1,6 +1,5 @@
 package com.iesvirgendelcarmen.mvc.proyecto.vista;
 
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JScrollPane;
@@ -268,6 +267,8 @@ public class Vista {
 	public JButton getBtnAñadir() {
 		return btnAñadir;
 	}
+
+
 
 	
 	

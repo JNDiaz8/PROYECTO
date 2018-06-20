@@ -5,9 +5,11 @@ import java.util.List;
 public interface CocheDAO {
 	
 	List<CocheDTO> listarTodosCoches();
-	boolean borrarCoches(String vinCoche);
+	public void completarArrays(List<CocheDTO> lista);
+	boolean borrarCoches(CocheDTO coche);
 	boolean actualizarCoches(CocheDTO coche);
 	boolean insertarCoches(CocheDTO coche);
 	boolean insertarListaCoches(List<CocheDTO> listaCoches);
+	boolean crearBaseDatos();
 	
 }
