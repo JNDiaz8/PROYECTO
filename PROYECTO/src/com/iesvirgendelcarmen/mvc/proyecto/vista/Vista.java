@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -27,29 +28,50 @@ public class Vista {
 	private JMenuItem menuItemCargar;
 	private JMenuItem menuItemSalir;
 	private JMenuItem menuItemAcercaDe;
-	private JButton btnMenos;
-	private JButton btnMas;
 	private JButton btnAñadir;
 	private JButton btnActualizar;
 	private JButton btnBorrar;
 	private Object tabbedPane;
 	private JScrollPane scrollPaneTablas;
-	private JMenuItem menuItemGuardar;
+	
+	private JTextField textAnadirMarcaCoche = new JTextField();
+	private JTextField textAnadirModeloCoche = new JTextField();
+	private JTextField textAnadirAnioCoche = new JTextField();
+	private JTextField textAnadirvinCoche = new JTextField();
+	
 
-	public JButton getBtnMenos() {
-		return btnMenos;
+
+
+	public JTextField getTextAnadirMarcaCoche() {
+		return textAnadirMarcaCoche;
 	}
 
-	public void setBtnMenos(JButton btnMenos) {
-		this.btnMenos = btnMenos;
+	public void setTextAnadirMarcaCoche(JTextField textAnadirMarcaCoche) {
+		this.textAnadirMarcaCoche = textAnadirMarcaCoche;
 	}
 
-	public JButton getBtnMas() {
-		return btnMas;
+	public JTextField getTextAnadirModeloCoche() {
+		return textAnadirModeloCoche;
 	}
 
-	public void setBtnMas(JButton btnMas) {
-		this.btnMas = btnMas;
+	public void setTextAnadirModeloCoche(JTextField textAnadirModeloCoche) {
+		this.textAnadirModeloCoche = textAnadirModeloCoche;
+	}
+
+	public JTextField getTextAnadirAnioCoche() {
+		return textAnadirAnioCoche;
+	}
+
+	public void setTextAnadirAnioCoche(JTextField textAnadirAnioCoche) {
+		this.textAnadirAnioCoche = textAnadirAnioCoche;
+	}
+
+	public JTextField getTextAnadirvinCoche() {
+		return textAnadirvinCoche;
+	}
+
+	public void setTextAnadirvinCoche(JTextField textAnadirvinCoche) {
+		this.textAnadirvinCoche = textAnadirvinCoche;
 	}
 
 	public JButton getBtnLeer() {
@@ -129,9 +151,6 @@ public class Vista {
 		menuItemCargar = new JMenuItem("Cargar datos");
 		mnDatos.add(menuItemCargar);
 		
-		menuItemGuardar = new JMenuItem("Guardar");
-		mnDatos.add(menuItemGuardar);
-		
 		menuItemSalir = new JMenuItem("Salir");
 		mnDatos.add(menuItemSalir);
 		
@@ -150,17 +169,11 @@ public class Vista {
 		
 		btnBorrar = new JButton("Borrar");
 		
-		
-		btnMenos = new JButton("<");
-
-		
-		btnMas = new JButton(">");
-		
 		JPanel panelTablas = new JPanel();
 		panelTablas.setBorder(new LineBorder(Color.GRAY, 3));
 		panelTablas.setLayout(new BorderLayout(0, 0));
 		
-		scrollPaneTablas = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneTablas = new JScrollPane(table);
         scrollPaneTablas.setEnabled(false);
 		
 		
@@ -169,20 +182,17 @@ public class Vista {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnMenos)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnMas)
-							.addPreferredGap(ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addGap(33)
 							.addComponent(btnAñadir)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGap(10)
 							.addComponent(btnActualizar, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnBorrar, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-							.addGap(8)))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnBorrar, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -190,10 +200,8 @@ public class Vista {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 253, GroupLayout.PREFERRED_SIZE)
-					.addGap(31)
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnMas)
-						.addComponent(btnMenos)
 						.addComponent(btnAñadir, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
 						.addComponent(btnActualizar, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
 						.addComponent(btnBorrar, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
@@ -230,14 +238,6 @@ public class Vista {
 
 	public void setScrollPaneTablas(JScrollPane scrollPaneTablas) {
 		this.scrollPaneTablas = scrollPaneTablas;
-	}
-
-	public JMenuItem getMenuItemGuardar() {
-		return menuItemGuardar;
-	}
-
-	public void setMenuItemGuardar(JMenuItem menuItemGuardar) {
-		this.menuItemGuardar = menuItemGuardar;
 	}
 
 	public void setFrame(JFrame frame) {

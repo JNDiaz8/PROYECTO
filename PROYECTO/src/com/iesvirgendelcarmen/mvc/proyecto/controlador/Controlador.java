@@ -1,19 +1,12 @@
 package com.iesvirgendelcarmen.mvc.proyecto.controlador;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -22,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.iesvirgendelcarmen.mvc.proyecto.modelo.CocheDAOImp;
 import com.iesvirgendelcarmen.mvc.proyecto.modelo.CocheDTO;
+import com.iesvirgendelcarmen.mvc.proyecto.modelo.ExcepcionCoche;
 import com.iesvirgendelcarmen.mvc.proyecto.modelo.LeerCSV;
 import com.iesvirgendelcarmen.mvc.proyecto.vista.Vista;
 
@@ -40,13 +34,7 @@ public class Controlador implements ActionListener {
 	private Vista vista;
 	
 	JScrollPane scrollPane; 
-	private int posicion=0;
 
-	private int filas = 22;
-	
-	int alto;
-
-	
 	public Controlador(Vista vista) {
 		this.vista = vista;
 		registrarComponentes();
@@ -58,8 +46,6 @@ public class Controlador implements ActionListener {
 		vista.getMenuItemCargar().addActionListener(this);
 		vista.getMenuItemSalir().addActionListener(this);
 		//registramos los botones
-		vista.getBtnMas().addActionListener(this);
-		vista.getBtnMenos().addActionListener(this);
 		vista.getBtnAñadir().addActionListener(this);
 		vista.getBtnBorrar().addActionListener(this);
 		vista.getBtnActualizar().addActionListener(this);
@@ -72,57 +58,38 @@ public class Controlador implements ActionListener {
 		//agrupamos jmenuitem
 		if (e.getSource().getClass() == JMenuItem.class) {
 			JMenuItem menuItem = (JMenuItem) e.getSource();
-			String menuString = menuItem.getText();
 			if (menuItem.getText().equals("Salir"))
 				salirAplicacion();
 			else if (menuItem.getText().equals("Acerca de"))
 				desplegarInformacion();
 			else
 				lanzarEleccionFichero();
+				actualizarDatosEnTabla();
 			}
 
 		//agruparemos jbutton
 		if (e.getSource().getClass() == JButton.class) {
 			JButton jButton = (JButton) e.getSource();
 			String textoBoton = jButton.getText();
-			System.out.println(textoBoton);
-			int contador = 0;
+
+
 			switch (textoBoton) {
-			case ">":
-				contador += 10;
+		    case "Añadir":
+		    	lanzarInputRecogerDatos();
 				break;
-			case "<":
-				contador -= 10;
+			case "Actualizar":
+				actualizarFilas();
 				break;
-		  /*case "Añadir":
-				try {
-					lanzarInputRecogerDatos();
-					vista.getMenuItemGuardar().setEnabled(true);
-				} catch (Exception e1) {
-					dialogo("Error añadiendo datos");
-				}
+			case "Borrar":
+				borrarFilas();
 				break;
-				*/
-			/*case "Actualizar":
-				try {
-					dialogo("Actualizados "+vista.getTable().getSelectedRowCount()+" elementos.");
-					actualizarFilas();
-					vista.getMenuItemGuardar().setEnabled(true);
-					} catch (Exception e1) {
-					dialogo("Error actualizando datos");
-					}
-				break;
-				*/
-			/*case "Borrar":
 				
-				break;
-				*/
 				}
 			}
 	}
 
 
-	/*private void lanzarInputRecogerDatos() {
+	private void lanzarInputRecogerDatos() {
 		Object[] textFields = {
 				"Marca Coche", vista.getTextAnadirMarcaCoche(),
 				"Modelo Coche", vista.getTextAnadirModeloCoche(),
@@ -132,18 +99,25 @@ public class Controlador implements ActionListener {
 		};
 		
 		int resultado = JOptionPane.showConfirmDialog(null, textFields, "Añadir datos", JOptionPane.OK_CANCEL_OPTION);
-		CocheDTO coche = new CocheDTO(vista.getTextAnadirMarcaCoche().getText(), vista.getTextAnadirModeloCoche().getText(), 
-				vista.getTextAnadirAnioCoche().getInt(), vista.getTextAnadirvinCoche().getText());
-		if(resultado==JOptionPane.OK_OPTION) {
-			manipular.insertarCoche(coche);
-			dialogo("COCHE INSERTADO "+"\nMarca: "+coche.getMarca()+
-								"\nColor: "+coche.getColor()+
-								"\nModelo: "+coche.getModelo()+
-								"\nOrigen: "+coche.getOrigen());
-			actualizarDatosEnTabla();
+		CocheDTO coche;
+		try {
+			coche = new CocheDTO(vista.getTextAnadirMarcaCoche().getText(), vista.getTextAnadirModeloCoche().getText(), 
+					Integer.parseInt(vista.getTextAnadirAnioCoche().getText()), vista.getTextAnadirvinCoche().getText());
+			if(resultado==JOptionPane.OK_OPTION) {
+				manipular.insertarCoches(coche);
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExcepcionCoche e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+			actualizarDatosEnTabla();
+		
 	}
-*/
+
 	
 
 
@@ -170,8 +144,7 @@ public class Controlador implements ActionListener {
 
  
 	private void desplegarInformacion() {
-		JOptionPane jpJOptionPane = new JOptionPane();
-		jpJOptionPane.showMessageDialog(vista.getFrame(), 
+		JOptionPane.showMessageDialog(vista.getFrame(), 
 				"Creado por Joaquín Díaz Ramírez", "Proyecto Final Programacion",
 				JOptionPane.INFORMATION_MESSAGE);
 		
@@ -197,13 +170,22 @@ public class Controlador implements ActionListener {
 	        		Modelo= vista.getTable().getValueAt(i, 1).toString();
 	        		Anio = Integer.parseInt(vista.getTable().getValueAt(i, 2).toString());
 	        		vin = vista.getTable().getValueAt(i, 3).toString();
-	        		CocheDTO coche = new CocheDTO(Marca, Modelo, Anio, vin);
-	        		listaCochesSe.add(coche);
+	        		CocheDTO coche;
+					try {
+						coche = new CocheDTO(Marca, Modelo, Anio, vin);
+						listaCochesSe.add(coche);
+					} catch (ExcepcionCoche e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	        		
 	            }
-	            manipular.insertarListaCoches(listaCochesSe);
+	           
+	            manipular.actualizarListaCoches(listaCochesSe);
 	            }
 	        }
 	    }
+	
 	private void actualizarDatosEnTabla() {
 		List<CocheDTO> lista = manipular.listarTodosCoches();
 		manipular.completarArrays(lista);
@@ -211,16 +193,14 @@ public class Controlador implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			@Override 
 		    public boolean isCellEditable(int row, int column){
-		    	return column!=0;
+		    	return column!=3;
 		    }
 		};
 		dimension = vista.getTable().getPreferredSize();
 		vista.getTable().setModel(model);
-		Component scrollPane = null;
-		scrollPane.setPreferredSize(new Dimension(dimension.width, vista.getTable().getRowHeight()*filas ));
 	}
 	
-	/*private void borrarFilas()  {
+	private void borrarFilas()  {
 	    List<CocheDTO> listaCochesSeleccionados = new ArrayList<>();
 	    String marcaCoche;
 	    String modeloCoche;
@@ -233,16 +213,21 @@ public class Controlador implements ActionListener {
 	            for (int i : selectedRow) {
 	            	marcaCoche =vista.getTable().getValueAt(i, 0).toString();
 	        		modeloCoche = vista.getTable().getValueAt(i, 1).toString();
-	        		anioCoche = vista.getTable().getValueAt(i, 2).toString();
+	        		anioCoche = Integer.parseInt(vista.getTable().getValueAt(i, 2).toString());
 	        		vinCoche = vista.getTable().getValueAt(i, 3).toString();
 
-	        		CocheDTO coche = new CocheDTO(marcaCoche, modeloCoche, anioCoche, vinCoche);
-					listaCochesSeleccionados.add(coche);
+	        		CocheDTO coche;
+					try {
+						coche = new CocheDTO(marcaCoche, modeloCoche, anioCoche, vinCoche);
+						listaCochesSeleccionados.add(coche);
+					} catch (ExcepcionCoche e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 	            }
 	            manipular.borrarListaCoches(listaCochesSeleccionados);
 	            actualizarDatosEnTabla();
 	            }
 	        }
 	    }
-	    */
 }

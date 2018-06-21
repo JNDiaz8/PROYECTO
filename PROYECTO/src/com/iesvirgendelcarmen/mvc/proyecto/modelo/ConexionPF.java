@@ -33,23 +33,11 @@ public class ConexionPF {
 		return conexion;
 	}
 	
-/*	public static void desconectar () {
-		if ( conexion != null )
-			try {
-				conexion.close();
-			} catch ( SQLException e ) {
-				e.printStackTrace();
-			}
-		
-	}
-	*/
-		
 		static class ShutdownHook extends Thread{
 			@Override
 			public void run() {
 				if (conexion != null)
 					try {
-						System.out.println("Cerrando conexión");
 						conexion.close();
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
